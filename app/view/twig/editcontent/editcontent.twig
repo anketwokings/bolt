@@ -24,12 +24,23 @@
 {% block page_main %}
     {% form_theme context.form '@bolt/editcontent/form/editcontent_form_layout.twig' %}
 
-    {% set status_names = {
-        'published': __('general.phrase.published'),
-        'held':      __('general.phrase.not-published'),
-        'timed':     __('general.phrase.publish-timed'),
-        'draft':     __('general.phrase.draft')
-    } %}
+  
+    
+    {% if app.config.get('general/timed_publish_enabled') == true %}
+        {% set status_names = {
+            'published': __('general.phrase.published'),
+            'held':      __('general.phrase.not-published'),
+            'timed':     __('general.phrase.publish-timed'),
+            'draft':     __('general.phrase.draft')
+        } %}
+    {% else %}
+        {% set status_names = {
+            'published': __('general.phrase.published'),
+            'held':      __('general.phrase.not-published'),
+            'draft':     __('general.phrase.draft')
+        } %}
+    {% endif %}
+
 
     {% set dateChanged %}{{ buic_moment(context.content.datechanged) }}{% endset %}
 
